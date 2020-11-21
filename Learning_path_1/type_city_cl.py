@@ -10,7 +10,7 @@ class City:
         city = type_city.lower()
         if city not in cities:
             type_city = ''
-            print('Invalid city, retry.')
-            type_city = City.cit(self, type_city)
+            type_city=input('Invalid city, retry.')
+            City.cit(self, type_city)
 
         return type_city

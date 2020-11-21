@@ -9,9 +9,9 @@ class typeb:
             checkType = ['ambata', 'ambo', 'terno', 'quaterna', 'cinquina']
             type_inp = type_inp.lower()
             if type_inp not in checkType:
-                print('Your bill is invalid, retry')
-                type_inp = typeb.type_bill(self, type_inp)
+                type_inp = input('Your bill is invalid, retry: ')
+                typeb.type_bill(self, type_inp)
             return type_inp
         except EOFError:
-            type_inp = typeb.type_bill(self, type_inp)
+            typeb.type_bill(self, type_inp)
             return type_inp

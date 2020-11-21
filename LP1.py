@@ -1,5 +1,4 @@
 import argparse
-import os
 from Learning_path_1.type_bill_cl import typeb
 from Learning_path_1.type_city_cl import City
 from Learning_path_1.type_num_cl import Num
