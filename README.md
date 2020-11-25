@@ -1,2 +1,2 @@
-# Python-LP1"# lotto_game2" 
+# Python-LP"# lotto_game" 
 3 Learning paths to replicate the lotto game in python
