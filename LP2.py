@@ -1,9 +1,12 @@
-from LP1 import Ticket
-from LP1 import arg_error
+
 from Learning_path_1.type_print import prnt
 import argparse
 from learning_path_2.extract import extraction
 from learning_path_2.winners import check_winner
+from Learning_path_1.type_ticket_cl import Ticket
+
+class arg_error(Exception):
+    pass
 
 def main():
     try:
