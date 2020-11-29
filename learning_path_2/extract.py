@@ -2,7 +2,7 @@ import random
 
 class extraction:
     def numbers(self):
-        numbs = {'bari':[], 'cagliari':[], 'firenze':[], 'genova':[], 'milano':[], 'napoli':[], 'palermo':[], 'roma':[], 'torino':[], 'venezia':[], 'all':[]}
+        numbs = {'bari':[], 'cagliari':[], 'firenze':[], 'genova':[], 'milano':[], 'napoli':[], 'palermo':[], 'roma':[], 'torino':[], 'venezia':[]}
         for city in numbs:
             x = 0
             while x < 10:

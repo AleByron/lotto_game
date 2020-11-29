@@ -4,11 +4,12 @@ from learning_path_2.winners import check_winner
 from Learning_path_1.type_bill_cl import typeb
 from Learning_path_1.type_city_cl import City
 from Learning_path_1.type_num_cl import Num
-from Learning_path_1.type_print import prnt
+from learning_path_3.type_print2 import prnt
+from learning_path_3.value import value
 
-class arg_error(Exception):
-    print('Wrong input, retry')
-    quit()
+class arg_error1(Exception):
+    print('error, invalid argument')
+    #quit()
 
 class Ticket:
     def __init__(self, args):
@@ -28,10 +29,13 @@ class Ticket:
                 type_num = Num.bill(self.args, typebill)
                 city = str(input('On wich city you want to play?\n(Bari, Cagliari, Firenze, Genova, Milano, Napoli, Palermo, Roma, Torino, Venezia or all):'))
                 type_city = City.cit(self.args,city)
+                money_amount = float(input('How much do you want to bet?: '))
                 bills.setdefault('Bill' + str(x), [])
                 bills['Bill' + str(x)].append(typebill)
                 bills['Bill' + str(x)].append(type_num)
                 bills['Bill' + str(x)].append(type_city)
+                bills['Bill' + str(x)].append(money_amount)
+
                 x = x + 1
 
         return bills
@@ -41,11 +45,12 @@ def main():
         parser = argparse.ArgumentParser(description='Process some integers.')
         parser.add_argument('inp', metavar='N', type=int)
         args = parser.parse_args()
+        print(args.inp)
 
-        if args.inp > 5:
-            raise arg_error
-        elif args.inp < 1:
-            raise arg_error
+        if int(args.inp) > 5:
+            raise arg_error1
+        elif int(args.inp) < 1:
+            raise arg_error1
 
         n_bill = args.inp
         all_tickets = []
@@ -70,21 +75,21 @@ def main():
         print(extr)
         the_winners = check_winner(extr, all_tickets)
         winners = the_winners.checker(extr, all_tickets)
-
+        #print(winners[2])
         c = 0 #counter for win messages
         if winners[0] != []:
             for tick in winners[0]:
+
                 ticket_obj = prnt(tick)
                 print(ticket_obj.lotto_ticket(tick))
                 print(winners[1][c])
+                money_obj = value(winners[2][c])
+                money = money_obj.calculate_value(winners[2][c])
+                print("You're lucky! You just won {cash}, the import out of taxes is {taxed_cash}".format(cash=round(money[0],2), taxed_cash=round(money[1],2)))
                 c = c+1
                 print('\n')
         quit()
-
     except IndexError:
         print('Invalid argument, retry')
-
-    except arg_error:
-        pass
 
 main()
