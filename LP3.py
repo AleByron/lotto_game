@@ -6,10 +6,7 @@ from Learning_path_1.type_city_cl import City
 from Learning_path_1.type_num_cl import Num
 from learning_path_3.type_print2 import prnt
 from learning_path_3.value import value
-
-class arg_error1(Exception):
-    print('error, invalid argument')
-    #quit()
+from learning_path_3.money import money
 
 class Ticket:
     def __init__(self, args):
@@ -18,18 +15,22 @@ class Ticket:
     def Finalticket(self):
         bills = {}
         args = int(self.args)
-        if args <= 0:
+        if self.args <= 0:
             print('Invalid bills number, retry')
             return
         elif 1 <= args <= 5:
             x = 0
             while x < args:
-                type_inp = input('What type of bill you want to play?(ambata, ambo, terno, quaterna, cinquina):')
-                typebill = typeb.type_bill(self.args, type_inp)
-                type_num = Num.bill(self.args, typebill)
-                city = str(input('On wich city you want to play?\n(Bari, Cagliari, Firenze, Genova, Milano, Napoli, Palermo, Roma, Torino, Venezia or all):'))
-                type_city = City.cit(self.args,city)
-                money_amount = float(input('How much do you want to bet?: '))
+                type_inp = typeb(input('What type of bill you want to play?(ambata, ambo, terno, quaterna, cinquina):'))
+                typebill = typeb.type_bill(type_inp)
+                type_num = Num.bill(typebill)
+                city = City(str(input('On wich city you want to play?\n(Bari, Cagliari, Firenze, Genova, Milano, Napoli, Palermo, Roma, Torino, Venezia or all):')))
+                type_city = City.cit(city)
+                try:
+                    money_amount = float(input('How much do you want to bet?: '))
+                except ValueError:
+                    money_amount = money.calculate_money(self.args)
+                print(money_amount)
                 bills.setdefault('Bill' + str(x), [])
                 bills['Bill' + str(x)].append(typebill)
                 bills['Bill' + str(x)].append(type_num)
@@ -47,10 +48,15 @@ def main():
         args = parser.parse_args()
         print(args.inp)
 
+
         if int(args.inp) > 5:
-            raise arg_error1
+            print('You can enter a maximum of 5 bills for a ticket')
+            quit()
         elif int(args.inp) < 1:
-            raise arg_error1
+            print('You should enter at least a single  bill for a ticket')
+            quit()
+        else:
+            pass
 
         n_bill = args.inp
         all_tickets = []
@@ -72,24 +78,26 @@ def main():
 
         extract = extraction()
         extr = extract.numbers()
-        print(extr)
         the_winners = check_winner(extr, all_tickets)
-        winners = the_winners.checker(extr, all_tickets)
-        #print(winners[2])
+        winners = the_winners.checker()
         c = 0 #counter for win messages
-        if winners[0] != []:
+        if winners[1] != ['In this ticket you won: \n Ambate : 0 \n Ambi :  0 \n Terni : 0 \n Quaterne : 0 \n Cinquine : 0 ']:
             for tick in winners[0]:
-
                 ticket_obj = prnt(tick)
-                print(ticket_obj.lotto_ticket(tick))
+                print(ticket_obj.lotto_ticket())
                 print(winners[1][c])
                 money_obj = value(winners[2][c])
-                money = money_obj.calculate_value(winners[2][c])
+                print(winners)
+                money = money_obj.calculate_value()
+                print(money)
                 print("You're lucky! You just won {cash}, the import out of taxes is {taxed_cash}".format(cash=round(money[0],2), taxed_cash=round(money[1],2)))
                 c = c+1
                 print('\n')
+        else:
+            print('No winner ticket detected')
         quit()
     except IndexError:
         print('Invalid argument, retry')
 
-main()
+if __name__ == "__main__":
+        main()

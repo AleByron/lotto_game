@@ -1,15 +1,15 @@
 class check_winner:
     def __init__(self, numbs, tickets):
-        self.numb = numbs
-        self.ticket = tickets
+        self.numbs = numbs
+        self.tickets = tickets
 
-    def checker(self,numbs,tickets):
+    def checker(self):
 
         winners = []
         win_mess_arr = []
         won_ticket_bills = []
 
-        for ticket in tickets:
+        for ticket in self.tickets:
             won_bills = {}
             win_mess = ''
             mess = ''
@@ -24,16 +24,16 @@ class check_winner:
             x = 0 #To access key related to the ticket's bill
             while len(ticket) > x:
                 this_ticket_bill = ticket["Bill" + str(x)[0][0]]
-                for city in numbs:
+                for city in self.numbs:
                     if city == this_ticket_bill[2] and city != 'all':
-                        numb = numbs[city]
+                        numb = self.numbs[city]
 
 
 
                 if this_ticket_bill[2] == 'all':
-                    for city in numbs:
+                    for city in self.numbs:
                         score = 0
-                        numb = numbs[city]
+                        numb = self.numbs[city]
                         for n in ticket["Bill" + str(x)][1]:
                             if int(n) in numb:
                                 score = score + 1
@@ -103,8 +103,9 @@ class check_winner:
 
                 x = int(x)
                 x = x + 1
+                won_ticket_bills.append(won_bills)
 
-                if win == True and ticket not in winners:
+                if won_ticket_bills != [] and ticket not in winners:
                     winners.append(ticket)
 
 
@@ -112,7 +113,7 @@ class check_winner:
             if winners != []:
                 win_mess = "In this ticket you won: \n Ambate : {ambt} \n Ambi :  {amb} \n Terni : {ter} \n Quaterne : {quat} \n Cinquine : {cinq} ".format(ambt=ambata, amb = ambo, ter = terno, quat = quaterna, cinq = cinquina)
                 win_mess_arr.append(win_mess)
-            won_ticket_bills.append(won_bills)
+
 
 
         return winners, win_mess_arr, won_ticket_bills
